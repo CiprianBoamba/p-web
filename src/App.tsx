@@ -1,16 +1,25 @@
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import './App.css';
-import { Button } from '@material-tailwind/react';
+
+import HomePage from './pages/Home';
+import About from './pages/About';
+import Projects from './pages/Projects';
 
 function App() {
   return (
-    <div className="App">
-      <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
-        <h1 className="text-3xl font-bold underline text-blue-600">
-          Simple React Typescript Tailwind Sample
-        </h1>
-        <Button>Button</Button>
+    <>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+          </Routes>
+        </BrowserRouter>
       </div>
-    </div>
+    </>
   );
 }
 
