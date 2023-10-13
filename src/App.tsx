@@ -6,12 +6,14 @@ import './App.css';
 import HomePage from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
+import MyNavbar from './components/Navbar';
 
-function App() {
+const App = () => {
   return (
     <>
       <div className="App">
         <BrowserRouter>
+          <MyNavbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<About />} />
@@ -21,6 +23,6 @@ function App() {
       </div>
     </>
   );
-}
+};
 
 export default App;
