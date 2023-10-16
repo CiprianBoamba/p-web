@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,45 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.text-shpere {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: #1e1e1e; */
+  overflow-y: hidden;
+}
+
+.tagcloud {
+  display: inline-block;
+  top: 0;
+  left: 0;
+  /* font-family: 'Inter', sans-serif; */
+  font-weight: 600;
+  letter-spacing: 0.0625em;
+  font-size: 1.3em;
+}
+
+/* Change color of each text in sphere on hover   */
+.tagcloud--item {
+  color: #00ffffff;
+  text-transform: uppercase;
+}
+
+.tagcloud--item:hover {
+  color: #ff6347;
+}
+
+/* Dark mode styles using a parent or body class */
+.dark .tagcloud--item {
+  color: #ffffff; /* Assuming you want white text in dark mode */
+}
+
+.dark .tagcloud--item:hover {
+  color: green; /* You can adjust this hover color for dark mode if needed */
 }
