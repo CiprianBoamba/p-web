@@ -7,6 +7,7 @@ import HomePage from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import MyNavbar from './components/Navbar';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -14,12 +15,12 @@ const App = () => {
       <div className="App">
         <BrowserRouter>
           <MyNavbar />
-
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </div>
     </>
