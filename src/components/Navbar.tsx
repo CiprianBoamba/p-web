@@ -1,126 +1,148 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Navbar,
-  Typography,
-  Button,
-  IconButton,
-  Collapse,
-  Card,
-  CardBody,
-} from '@material-tailwind/react';
+import { Transition } from '@headlessui/react';
+import Switcher from '../components/Switcher';
+import AnimatedIcon from '../components/Animation';
 
-const MyNavbar: React.FC = () => {
-  const [openNav, setOpenNav] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 960) {
-        setOpenNav(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Clean up the listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Link to="/" className="flex items-center">
-          Home
-        </Link>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Link to="/about" className="flex items-center">
-          About
-        </Link>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Link to="/projects" className="flex items-center">
-          Projects
-        </Link>
-      </Typography>
-    </ul>
-  );
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const divRef = React.createRef<HTMLDivElement>();
 
   return (
-    <Navbar className="h-max max-w-full rounded-none  mx-auto  py-2 px-4 lg:px-8 lg:py-4">
-      <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          className="mr-4 cursor-pointer py-1.5 font-medium"
-        >
-          my logo
-        </Typography>
-        <div className="hidden lg:block">{navList}</div>
+    <div>
+      <nav className="bg-slate-200 dark:bg-slate-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex-shrink-0">
+              <img
+                className="h-8 w-8"
+                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                alt="Workflow"
+              />
+            </div>
 
-        <IconButton
-          variant="text"
-          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-          ripple={false}
-          onClick={() => setOpenNav(!openNav)}
+            <div className="flex items-center justify-end space-x-4">
+              {/* Links for larger screens */}
+              <div className="hidden md:flex space-x-4">
+                <Link
+                  to="/"
+                  className="relative text-slate-900 dark:text-white  overflow-hidden group px-3 py-2  text-sm font-medium"
+                >
+                  Home
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-red-500 dark:bg-purple-600 transform scale-x-0 transition-transform origin-center group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to="/about"
+                  className="text-slate-900 dark:text-white relative overflow-hidden group px-3 py-2  text-sm font-medium"
+                >
+                  About
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-red-500 dark:bg-purple-600 transform scale-x-0 transition-transform origin-center group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to="/projects"
+                  className="relative text-slate-900 dark:text-white  px-3 py-2  text-sm font-medium  overflow-hidden group"
+                >
+                  Projects
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-red-500 dark:bg-purple-600 transform scale-x-0 transition-transform origin-center group-hover:scale-x-100"></span>
+                </Link>
+              </div>
+
+              <AnimatedIcon />
+
+              {/* Mobile menu button */}
+              <div className="-mr-2 flex md:hidden">
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  type="button"
+                  className="bg-gray-500 inline-flex items-center justify-center p-2 rounded-md text-white
+                   dark:bg-gray-900 dark:text-purple-600 
+                hover:bg-gray-600 focus:outline-none"
+                  aria-controls="mobile-menu"
+                  aria-expanded="false"
+                >
+                  <span className="sr-only">Open main menu</span>
+                  {!isOpen ? (
+                    <svg
+                      className="block h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="block h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Transition
+          show={isOpen}
+          enter="transition ease-out duration-100 transform"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="transition ease-in duration-75 transform"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
         >
-          {openNav ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              className="h-6 w-6"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+          {() => (
+            <div className="md:hidden" id="mobile-menu">
+              <div
+                ref={divRef}
+                className=" flex flex-col justify-center items-center flex-nowrap px-2 pt-2 pb-3 space-y-1 sm:px-3"
+              >
+                <Link
+                  to="/"
+                  className="text-slate-900 dark:text-white relative px-3 py-2  text-sm font-medium overflow-hidden group"
+                >
+                  Home
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-red-500 dark:bg-purple-600 transform scale-x-0 transition-transform origin-center group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to="/about"
+                  className="text-slate-900 dark:text-white relative px-3 py-2  text-sm font-medium overflow-hidden group"
+                >
+                  About
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-red-500 dark:bg-purple-600 transform scale-x-0 transition-transform origin-center group-hover:scale-x-100"></span>
+                </Link>
+                <Link
+                  to="/projects"
+                  className="text-slate-900 dark:text-white relative px-3 py-2  text-sm font-medium overflow-hidden group"
+                >
+                  Projects
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-red-500 dark:bg-purple-600 transform scale-x-0 transition-transform origin-center group-hover:scale-x-100"></span>
+                </Link>
+              </div>
+            </div>
           )}
-        </IconButton>
-      </div>
-
-      <Collapse open={openNav}>
-        <Card className="my-4 mx-auto w-full lg:w-8/12">
-          <CardBody>{navList}</CardBody>
-        </Card>
-      </Collapse>
-    </Navbar>
+        </Transition>
+      </nav>
+    </div>
   );
 };
 
-export default MyNavbar;
+export default Navbar;
